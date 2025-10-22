@@ -1,0 +1,438 @@
+﻿<Window x:Class="EpicGamesLauncher.AuthWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EpicGamesLauncher"
+        xmlns:PB="clr-namespace:EpicGamesLauncher.CustomControls"
+        xmlns:vm="clr-namespace:EpicGamesLauncher.ViewModel"
+        mc:Ignorable="d"
+        Background="#272D2D"
+        Height="450"
+        Icon="{StaticResource Icon.EpicGames}"
+        Width="800"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        MouseLeftButtonDown="AuthWindow_OnMouseLeftButtonDown">
+    <Window.DataContext>
+        <vm:AuthViewModel/>
+    </Window.DataContext>
+   
+    <Window.Resources>
+        <Color x:Key="Color.Shadow">#272D2D</Color>
+        <Color x:Key="Color.VignetteFocus">#F6F8FF</Color>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
+        <DataTemplate x:Key="ImageItemTemplate">
+            <Border ClipToBounds="True"
+                    BorderBrush="#50514F"
+                    BorderThickness="1"
+                    Height="300"
+                    UseLayoutRounding="True"
+                    Margin="5">
+                <Image Source="{Binding}"
+                       Stretch="UniformToFill"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+            </Border>
+        </DataTemplate>
+
+        <Style x:Key="ImageContainerBorderStyle" TargetType="Border">
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Direction="0"
+                                      Color="{StaticResource Color.Shadow}"
+                                      BlurRadius="10"
+                                      ShadowDepth="0" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <TranslateTransform />
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Image">
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Direction="0"
+                                      Color="{StaticResource Color.Shadow}"
+                                      BlurRadius="20"
+                                      ShadowDepth="0" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Window.Visibility>
+        <Binding Path="IsViewVisible" Mode="TwoWay" Converter="{StaticResource BooleanToVisibility}"/>
+    </Window.Visibility>
+    <Border CornerRadius="5"
+            ClipToBounds="True">
+
+        <Border.Background>
+            <RadialGradientBrush Opacity=".8">
+                <GradientStop Color="{StaticResource Color.VignetteFocus}"
+                              Offset="0.0" />
+                <GradientStop Color="Transparent"
+                              Offset="1.0" />
+            </RadialGradientBrush>
+        </Border.Background>
+        <Grid>
+            <!-- Write purpose of using viewbox here  -->
+            <Viewbox Margin="-250"
+                     Stretch="Uniform"
+                     Height="1600">
+                <!-- Using VirtualizingStackPanel since there are going to be many images -->
+                <VirtualizingStackPanel ClipToBounds="True"
+                                        Opacity="0.4"
+                                        RenderTransformOrigin="0.5,0.5" 
+                                        Margin="-300">
+
+
+                    <VirtualizingStackPanel.Effect>
+                        <BlurEffect RenderingBias="Quality" KernelType="Box" Radius="3" />
+                    </VirtualizingStackPanel.Effect>
+                    <VirtualizingStackPanel.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="2"
+                                            ScaleY="2" />
+                            <RotateTransform Angle="-45" />
+                        </TransformGroup>
+                    </VirtualizingStackPanel.RenderTransform>
+
+      
+                    <Border Height="300"
+                            Style="{StaticResource ImageContainerBorderStyle}">
+                        <Border.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard RepeatBehavior="Forever" AutoReverse="True" SpeedRatio="1">
+                                        <DoubleAnimation
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                            From="0"
+                                            To="-100"
+                                            Duration="0:0:06"
+                                            BeginTime="0:0:0" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Border.Triggers>
+                        <ItemsControl ItemsSource="{Binding ListImages1, UpdateSourceTrigger=PropertyChanged}"
+                                      ItemTemplate="{StaticResource ImageItemTemplate}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </Border>
+                    <Border Margin="0,5"
+                            Height="300"
+                            Style="{StaticResource ImageContainerBorderStyle}">
+                        <Border.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard RepeatBehavior="Forever" AutoReverse="True" SpeedRatio="1">
+                                        <DoubleAnimation
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                            From="0"
+                                            To="-100"
+                                            Duration="0:0:08"
+                                            BeginTime="0:0:2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Border.Triggers>
+                        <ItemsControl ItemsSource="{Binding ListImages2}"
+                                      ItemTemplate="{StaticResource ImageItemTemplate}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </Border>
+                    <Border Height="300"
+                            Style="{StaticResource ImageContainerBorderStyle}">
+                        <Border.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard RepeatBehavior="Forever" AutoReverse="True" SpeedRatio="1">
+                                        <DoubleAnimation
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                            From="0"
+                                            To="-100"
+                                            Duration="0:0:05"
+                                            BeginTime="0:0:0" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Border.Triggers>
+                        <ItemsControl ItemsSource="{Binding ListImages3, UpdateSourceTrigger=PropertyChanged}"
+                                      ItemTemplate="{StaticResource ImageItemTemplate}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </Border>
+                    <Border Margin="0,5"
+                            Height="300"
+                            Style="{StaticResource ImageContainerBorderStyle}">
+                        <Border.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard RepeatBehavior="Forever" AutoReverse="True" SpeedRatio="1">
+                                        <DoubleAnimation
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                            From="0"
+                                            To="-100"
+                                            Duration="0:0:07"
+                                            BeginTime="0:0:2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Border.Triggers>
+                        <ItemsControl ItemsSource="{Binding ListImages4}"
+                                      ItemTemplate="{StaticResource ImageItemTemplate}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </Border>
+                    <Border Style="{StaticResource ImageContainerBorderStyle}"
+                            Height="300">
+                        <Border.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard RepeatBehavior="Forever" AutoReverse="True" SpeedRatio="1">
+                                        <DoubleAnimation
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                            From="0"
+                                            To="-100"
+                                            Duration="0:0:04"
+                                            BeginTime="0:0:0" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Border.Triggers>
+                        <ItemsControl ItemsSource="{Binding ListImages5}"
+                                      ItemTemplate="{StaticResource ImageItemTemplate}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </Border>
+                    <Border Margin="0,5"
+                            Height="300"
+                            Style="{StaticResource ImageContainerBorderStyle}">
+                        <Border.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard RepeatBehavior="Forever" AutoReverse="True" SpeedRatio="1">
+                                        <DoubleAnimation
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                            From="0"
+                                            To="-100"
+                                            Duration="0:0:05"
+                                            BeginTime="0:0:2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Border.Triggers>
+                        <ItemsControl ItemsSource="{Binding ListImages6}"
+                                      ItemTemplate="{StaticResource ImageItemTemplate}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </Border>
+                    <Border Height="300"
+                            Style="{StaticResource ImageContainerBorderStyle}">
+                        <Border.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard RepeatBehavior="Forever" AutoReverse="True" SpeedRatio="1">
+                                        <DoubleAnimation
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                            From="0"
+                                            To="-100"
+                                            Duration="0:0:06"
+                                            BeginTime="0:0:0" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Border.Triggers>
+                        <ItemsControl ItemsSource="{Binding ListImages7}"
+                                      ItemTemplate="{StaticResource ImageItemTemplate}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </Border>
+                    <Border Margin="0,5"
+                            Height="300"
+                            Style="{StaticResource ImageContainerBorderStyle}">
+                        <Border.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard RepeatBehavior="Forever" AutoReverse="True" SpeedRatio="1">
+                                        <DoubleAnimation
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                            From="0"
+                                            To="-100"
+                                            Duration="0:0:08"
+                                            BeginTime="0:0:2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Border.Triggers>
+                        <ItemsControl ItemsSource="{Binding ListImages8}"
+                                      ItemTemplate="{StaticResource ImageItemTemplate}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </Border>
+                    <Border Height="300"
+                            Style="{StaticResource ImageContainerBorderStyle}">
+                        <Border.Triggers>
+                            <EventTrigger RoutedEvent="Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard RepeatBehavior="Forever" AutoReverse="True" SpeedRatio="1">
+                                        <DoubleAnimation
+                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                            From="0"
+                                            To="-100"
+                                            Duration="0:0:04"
+                                            BeginTime="0:0:0" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Border.Triggers>
+                        <ItemsControl ItemsSource="{Binding ListImages9}"
+                                      ItemTemplate="{StaticResource ImageItemTemplate}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </Border>
+                </VirtualizingStackPanel>
+            </Viewbox>
+
+            <!-- Logo -->
+            <Image HorizontalAlignment="Center"
+                   Height="150"
+                   Margin="0,75,0,225"
+                   Source="{StaticResource Icon.EpicGames}"
+                   RenderOptions.BitmapScalingMode="HighQuality" />
+            <TextBox x:Name="txtUser"
+                     Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+                     FontSize="13"
+          FontWeight="Medium"
+          FontFamily="Montserrat"                            
+          Foreground="White"
+          CaretBrush="LightGray"
+          BorderBrush="DarkGray"
+          BorderThickness="0,0,0,2"
+          VerticalContentAlignment="Center"
+          Margin="252,267,252,165"
+          Padding="20,0,0,0">
+                <TextBox.Background>
+                    <ImageBrush ImageSource="/Resources/user-icon.png"
+                     Stretch="None"
+                     AlignmentX="Left"/>
+                </TextBox.Background>
+            </TextBox>
+            <!--<TextBlock Text="Введите пароль"
+            Foreground="DarkGray"
+            FontSize="12"
+            FontWeight="Medium"
+            FontFamily="Montserrat"                             
+            Margin="252,337,0,0"/>-->
+
+            
+            <PB:PasswordBox Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                        Height="28"                            
+                                                        Margin="252,304,252,118">
+            </PB:PasswordBox>
+
+            <TextBlock Text="{Binding ErrorMessage}"
+            Foreground="#D7596D"
+            FontSize="12"
+            FontWeight="Medium"
+            FontFamily="Montserrat"                             
+            Margin="297,346,317,92"
+            TextWrapping="Wrap"/>
+
+            <Button x:Name="btnLogin" 
+         Command="{Binding LoginCommand}"
+         BorderThickness="0"
+         Content="ВОЙТИ"
+         Foreground="White"
+         FontSize="12"
+         FontFamily="Montserrat"
+         Cursor="Hand"                           
+         Margin="312,363,332,38" Width="156">
+
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#462AD8"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#28AEED"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="150" Height="40"
+                     CornerRadius="20"
+                     Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+            <StackPanel Orientation="Horizontal"
+             HorizontalAlignment="Left"
+             Margin="302,412,0,1">
+
+                <TextBlock Text="Забыли пароль?"
+            Foreground="DarkGray"
+            FontSize="12"
+            FontWeight="Medium"
+            FontFamily="Montserrat" Height="24"/>
+
+                <TextBlock Text="Восстановить"
+            
+            Foreground="White"
+            FontSize="12"
+            FontWeight="Medium"
+            FontFamily="Montserrat"
+            Cursor="Hand"
+            Margin="8,0,0,0" Height="25"/>
+
+            </StackPanel>
+
+        </Grid>
+    </Border>
+</Window>
