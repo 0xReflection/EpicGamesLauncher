@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EpicGamesLauncher.Models;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -8,24 +9,34 @@ using System.Windows;
 
 namespace EpicGamesLauncher
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
+        public static Models.User CurrentUser { get; set; }
+
         protected void ApplicationStart(object sender, StartupEventArgs e)
         {
-            var authUser = new AuthWindow();
-            authUser.Show();
-            authUser.IsVisibleChanged += (s, ev) =>
+            System.Diagnostics.Debug.WriteLine("ApplicationStart called");
+
+            var authWindow = new AuthWindow();
+            bool? result = authWindow.ShowDialog();
+
+            System.Diagnostics.Debug.WriteLine($"Dialog result: {result}, User: {CurrentUser?.Username}");
+
+            if (result == true && CurrentUser != null)
             {
-                if (authUser.IsVisible == false && authUser.IsLoaded)
-                {
-                    var mainWin= new MainWindow();
-                    mainWin.Show();
-                    authUser.Close();
-                }
-            };
+                System.Diagnostics.Debug.WriteLine("Opening MainWindow...");
+
+                var mainWindow = new MainWindow();
+                this.MainWindow = mainWindow;
+                mainWindow.Show();
+
+                System.Diagnostics.Debug.WriteLine("MainWindow should be visible now");
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("Authentication failed - shutting down");
+                Shutdown();
+            }
         }
     }
 }

@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace EpicGamesLauncher.Models
 {
-    public class ClientAccountModel
+    public class LoginRequest
     {
         public string Username { get; set; }
-        public string DisplayName { get; set; }
-        public byte[] ProfilePicture { get; set; }
+        public string Password { get; set; }
     }
 }

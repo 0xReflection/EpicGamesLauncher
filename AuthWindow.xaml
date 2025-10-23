@@ -64,9 +64,9 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Window.Visibility>
+    <!--<Window.Visibility>
         <Binding Path="IsViewVisible" Mode="TwoWay" Converter="{StaticResource BooleanToVisibility}"/>
-    </Window.Visibility>
+    </Window.Visibility>-->
     <Border CornerRadius="5"
             ClipToBounds="True">
 

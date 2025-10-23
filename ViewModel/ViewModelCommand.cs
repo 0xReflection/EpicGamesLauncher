@@ -9,11 +9,10 @@ namespace EpicGamesLauncher.ViewModel
 {
     public class ViewModelCommand : ICommand
     {
-        //поля
+       
         private readonly Action<object> _executeAction;
         private readonly Predicate<object> _canExecuteAction;
 
-        //конструкторы
         public ViewModelCommand(Action<object> executeAction)
         {
             _executeAction = executeAction;
@@ -26,14 +25,12 @@ namespace EpicGamesLauncher.ViewModel
             _canExecuteAction = canExecuteAction;
         }
 
-        //ивенты
         public event EventHandler CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
         }
 
-        //методы
         public bool CanExecute(object parameter)
         {
             return _canExecuteAction == null ? true : _canExecuteAction(parameter);

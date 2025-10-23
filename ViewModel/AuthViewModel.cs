@@ -1,24 +1,133 @@
-﻿using EpicGamesLauncher.Models.Interfaces;
+﻿using EpicGamesLauncher.Logger.EpicGamesLauncher.Logger;
+using EpicGamesLauncher.Models;
+using EpicGamesLauncher.Models.Interfaces;
 using EpicGamesLauncher.Repository;
+using EpicGamesLauncher.Services;
+using EpicGamesLauncher.Services.Interfaces;
+using EpicGamesLauncher.ViewModel;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
+using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.Principal;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace EpicGamesLauncher.ViewModel
 {
     public class AuthViewModel : ViewModelBase
     {
+        private readonly IAuthService _authService;
         private string _username;
+        private string _email;
         private SecureString _password;
+        private SecureString _confirmPassword;
+        private bool _isLoginMode = true;
+        private bool _isLoading;
         private string _errorMessage;
-        private bool _isViewVisible = true;
 
-        private IClientRepository userRepository;
+        public AuthViewModel()
+        {
+            var userRepository = new UserRepository();
+            var logger = new ConsoleLogger<AuthService>();
+            _authService = new AuthService(userRepository, logger);
+
+            InitializeCommands();
+        }
+
+        public AuthViewModel(IAuthService authService)
+        {
+            _authService = authService;
+            InitializeCommands();
+        }
+
+        private void InitializeCommands()
+        {
+            LoginCommand = new AsyncCommand(LoginAsync, () => CanLogin);
+            RegisterCommand = new AsyncCommand(RegisterAsync, () => CanRegister);
+            SwitchModeCommand = new AsyncCommand(SwitchMode);
+            InitImages();
+        }
+
+        public string Username
+        {
+            get => _username;
+            set
+            {
+                if (SetProperty(ref _username, value))
+                {
+                    RaiseCanExecuteChanged();
+                }
+            }
+        }
+
+        public string Email
+        {
+            get => _email;
+            set
+            {
+                if (SetProperty(ref _email, value))
+                {
+                    RaiseCanExecuteChanged();
+                }
+            }
+        }
+
+        public SecureString Password
+        {
+            get => _password;
+            set
+            {
+                _password = value;
+                OnPropertyChanged();
+                RaiseCanExecuteChanged();
+            }
+        }
+
+        public SecureString ConfirmPassword
+        {
+            get => _confirmPassword;
+            set
+            {
+                _confirmPassword = value;
+                OnPropertyChanged();
+                RaiseCanExecuteChanged();
+            }
+        }
+
+
+        public bool IsLoginMode
+        {
+            get => _isLoginMode;
+            set
+            {
+                if (SetProperty(ref _isLoginMode, value))
+                {
+                    RaiseCanExecuteChanged();
+                }
+            }
+        }
+
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set
+            {
+                if (SetProperty(ref _isLoading, value))
+                {
+                    RaiseCanExecuteChanged();
+                }
+            }
+        }
+
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            set => SetProperty(ref _errorMessage, value);
+        }
         public ObservableCollection<string> ListImages1 { get; set; }
         public ObservableCollection<string> ListImages2 { get; set; }
         public ObservableCollection<string> ListImages3 { get; set; }
@@ -28,6 +137,7 @@ namespace EpicGamesLauncher.ViewModel
         public ObservableCollection<string> ListImages7 { get; set; }
         public ObservableCollection<string> ListImages8 { get; set; }
         public ObservableCollection<string> ListImages9 { get; set; }
+
 
         public static readonly ReadOnlyObservableCollection<string> CoverImageUrls =
             new(new ObservableCollection<string>
@@ -133,41 +243,124 @@ namespace EpicGamesLauncher.ViewModel
                 "https://cdn.cloudflare.steamstatic.com/steam/apps/228380/header.jpg",
                 "https://cdn.cloudflare.steamstatic.com/steam/apps/108600/header.jpg"
             });
+        public AsyncCommand LoginCommand { get; private set; }
+        public AsyncCommand RegisterCommand { get; private set; }
+        public AsyncCommand SwitchModeCommand { get; private set; }
 
-        public string Username
+        public event Action<User> AuthenticationSuccess;
+        public event Action<string> AuthenticationFailed;
+
+        private bool CanLogin => !IsLoading &&
+                          !string.IsNullOrWhiteSpace(Username) &&
+                          Password != null && Password.Length > 0;
+
+        private bool CanRegister => !IsLoading &&
+                                  !string.IsNullOrWhiteSpace(Username) &&
+                                  !string.IsNullOrWhiteSpace(Email) &&
+                                  Password != null && Password.Length > 0 &&
+                                  ConfirmPassword != null && ConfirmPassword.Length > 0;
+
+        private void RaiseCanExecuteChanged()
         {
-            get => _username;
-            set { _username = value; OnPropertyChanged(nameof(Username)); }
+            LoginCommand?.RaiseCanExecuteChanged();
+            RegisterCommand?.RaiseCanExecuteChanged();
         }
 
-        public SecureString Password
+        private async Task LoginAsync()
         {
-            get => _password;
-            set { _password = value; OnPropertyChanged(nameof(Password)); }
+            try
+            {
+                IsLoading = true;
+                ErrorMessage = string.Empty;
+                RaiseCanExecuteChanged();
+
+                // Конвертируем SecureString в обычную строку
+                string password = SecureStringToString(Password);
+
+                var user = await _authService.LoginAsync(Username, password);
+                if (user != null)
+                {
+                    App.CurrentUser = user;
+                    AuthenticationSuccess?.Invoke(user);
+                }
+                else
+                {
+                    ErrorMessage = "Invalid username or password";
+                    AuthenticationFailed?.Invoke(ErrorMessage);
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = "Login failed. Please try again.";
+                AuthenticationFailed?.Invoke(ErrorMessage);
+            }
+            finally
+            {
+                IsLoading = false;
+                RaiseCanExecuteChanged();
+            }
         }
 
-        public string ErrorMessage
+        private async Task RegisterAsync()
         {
-            get => _errorMessage;
-            set { _errorMessage = value; OnPropertyChanged(nameof(ErrorMessage)); }
+            try
+            {
+                IsLoading = true;
+                ErrorMessage = string.Empty;
+                RaiseCanExecuteChanged();
+
+                // Конвертируем SecureString в обычную строку
+                string password = SecureStringToString(Password);
+
+                var success = await _authService.RegisterAsync(Username, Email, password);
+                if (success)
+                {
+                    var user = await _authService.LoginAsync(Username, password);
+                    if (user != null)
+                    {
+                        App.CurrentUser = user;
+                        AuthenticationSuccess?.Invoke(user);
+                    }
+                    else
+                    {
+                        ErrorMessage = "Registration successful but login failed. Please try logging in.";
+                        AuthenticationFailed?.Invoke(ErrorMessage);
+                    }
+                }
+                else
+                {
+                    ErrorMessage = "Registration failed. Username or email may already exist.";
+                    AuthenticationFailed?.Invoke(ErrorMessage);
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = "Registration failed. Please try again.";
+                AuthenticationFailed?.Invoke(ErrorMessage);
+            }
+            finally
+            {
+                IsLoading = false;
+                RaiseCanExecuteChanged();
+            }
+        }
+        private string SecureStringToString(SecureString secureString)
+        {
+            if (secureString == null)
+                return string.Empty;
+
+            IntPtr ptr = IntPtr.Zero;
+            try
+            {
+                ptr = Marshal.SecureStringToGlobalAllocUnicode(secureString);
+                return Marshal.PtrToStringUni(ptr);
+            }
+            finally
+            {
+                Marshal.ZeroFreeGlobalAllocUnicode(ptr);
+            }
         }
 
-        public bool IsViewVisible
-        {
-            get => _isViewVisible;
-            set { _isViewVisible = value; OnPropertyChanged(nameof(IsViewVisible)); }
-        }
-        public ICommand LoginCommand { get; }
-        public ICommand RecoverPasswordCommand { get; }
-
-        public AuthViewModel()
-        {
-            userRepository = new clientRepository();
-            LoginCommand = new ViewModelCommand(ExecuteLoginCommand, CanExecuteLoginCommand);
-            RecoverPasswordCommand = new ViewModelCommand(p => ExecuteRecoverPassCommand("", ""));
-
-            InitImages();
-        }
         private void InitImages()
         {
             var temp = CoverImageUrls.OrderBy(_ => Guid.NewGuid()).Distinct().ToList();
@@ -193,35 +386,18 @@ namespace EpicGamesLauncher.ViewModel
             OnPropertyChanged(nameof(ListImages9));
         }
 
-        private bool CanExecuteLoginCommand(object obj)
-        {
-            bool validData;
-            if (string.IsNullOrWhiteSpace(Username) || Username.Length < 3 ||
-                Password == null || Password.Length < 3)
-                validData = false;
-            else
-                validData = true;
-            return validData;
-        }
 
-        private void ExecuteLoginCommand(object obj)
+        private Task SwitchMode()
         {
-            var isValidUser = userRepository.AuthenticateUser(new NetworkCredential(Username, Password));
-            if (isValidUser)
-            {
-                Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(Username), null);
-                IsViewVisible = false;
-               
-            }
-            else
-            {
-                ErrorMessage = "*Неверный логин или пароль, попробуйте ещё раз.";
-            }
-        }
+            IsLoginMode = !IsLoginMode;
+            ErrorMessage = string.Empty;
+            Password?.Dispose();
+            ConfirmPassword?.Dispose();
+            Password = new SecureString();
+            ConfirmPassword = new SecureString();
 
-        private void ExecuteRecoverPassCommand(string username, string email)
-        {
-            throw new NotImplementedException();
+            RaiseCanExecuteChanged();
+            return Task.CompletedTask;
         }
     }
 }
