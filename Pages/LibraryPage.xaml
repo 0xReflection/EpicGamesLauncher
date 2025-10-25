@@ -48,8 +48,6 @@
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-
-        <!-- SignIn Popup (остается без изменений) -->
         <Border Grid.Row="0" Style="{StaticResource SignInPopup}">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Margin="19,0" FontSize="15"
@@ -68,7 +66,7 @@
 
             <Rectangle HorizontalAlignment="Right" Width="1" Fill="{StaticResource SearchBackgroundBrush}"/>
 
-            <!-- Side Navigation (остается без изменений) -->
+      
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="122"/>
@@ -92,6 +90,7 @@
                             <attachedProperties:CheckableMenuButton Content="Home" Icon="{StaticResource HomeIcon}"
                                 Style="{StaticResource SideNavigationCheckableMenuButtonsStyle}"/>
                             <attachedProperties:CheckableMenuButton Content="Store" Icon="{StaticResource StoreIcon}"
+                                                                    Click="BtnStore_Click"
                                 Style="{StaticResource SideNavigationCheckableMenuButtonsStyle}"/>
                             <attachedProperties:CheckableMenuButton Content="Library" Icon="{StaticResource LibraryIcon}"
                                 Style="{StaticResource SideNavigationCheckableMenuButtonsStyle}"/>
@@ -116,14 +115,11 @@ Style="{StaticResource SideNavigationBasicMenuButtonsStyle}"/>
                 </attachedProperties:SideNavigationMenu>
             </Grid>
 
-            <!-- Основной контент -->
             <Grid Grid.Column="1" Margin="34">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-
-                <!-- Панель управления -->
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
@@ -160,12 +156,10 @@ Style="{StaticResource SideNavigationBasicMenuButtonsStyle}"/>
                     <customControls:SearchBox Grid.Column="5" Margin="2" Width="255" Height="48"/>
                 </Grid>
 
-                <!-- Список игр -->
                 <ScrollViewer Grid.Row="1" VerticalAlignment="Top" Margin="18,37,0,0" VerticalScrollBarVisibility="Auto">
                     <WrapPanel x:Name="GamesWrapPanel"/>
                 </ScrollViewer>
 
-                <!-- Сообщение, если библиотека пуста -->
                 <TextBlock Grid.Row="1" 
            Text="Your library is empty. Add some games from the Store!"
            HorizontalAlignment="Center" 

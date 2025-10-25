@@ -47,25 +47,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!--<Border
-            Grid.Row="0"
-            Style="{StaticResource SignInPopup}">
-            <StackPanel
-    Orientation="Horizontal">
-                <TextBlock
-        Margin="19,0"
-        FontSize="15"
-        Text="You are not signed in. To get access to all Epic Games features, reconnect to the Epic Games network."
-        VerticalAlignment="Center"
-        Foreground="{StaticResource CaptionFontBrush}"/>
-
-                <Button
-        Margin="0,2,0,3"
-        Content="Sign in"
-        Click="ButtonBase_OnClick"
-        Style="{StaticResource PrimaryButtonStyle}"/>
-            </StackPanel>
-        </Border>-->
+     
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -133,10 +115,7 @@
 
                     <attachedProperties:SideNavigationMenu.FooterMenuButtonsContainer>
                         <StackPanel Orientation="Vertical">
-                            <!--<attachedProperties:BasicMenuButton
-    Content="Downloads"
-    Icon="{StaticResource DownloadsIcon}"
-    Style="{StaticResource SideNavigationBasicMenuButtonsStyle}"/>-->
+                       
                             <attachedProperties:BasicMenuButton
     Content="Settings"
     x:Name="BtnSettings"

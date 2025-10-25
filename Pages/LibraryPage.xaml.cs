@@ -18,9 +18,7 @@ using System.Windows.Shapes;
 
 namespace EpicGamesLauncher.Pages
 {
-    /// <summary>
-    /// Логика взаимодействия для LibraryPage.xaml
-    /// </summary>
+
     public partial class LibraryPage : Page
     {
         private readonly LibraryViewModel _viewModel;
@@ -64,12 +62,11 @@ namespace EpicGamesLauncher.Pages
                     Developer = game.Developer?.Name,
                     Genre = string.Join(", ", game.Genres.Select(g => g.Name)),
                     Platform = string.Join(", ", game.Platforms.Select(p => p.Name)),
-                    ImageSource = game.CoverImage, // Убедитесь что это свойство заполнено
+                    ImageSource = game.CoverImage,
                     Price = "In Library",
                     GameId = game.GameId
                 };
 
-                // Добавьте отладку для проверки пути картинки
                 if (string.IsNullOrEmpty(game.CoverImage))
                 {
                     System.Diagnostics.Debug.WriteLine($"Game {game.Title} has no cover image");
@@ -93,6 +90,12 @@ namespace EpicGamesLauncher.Pages
         private void BtnSettings_OnClick(object sender, RoutedEventArgs e)
         {
             NavigationService?.Navigate(new Uri("Pages/SettingsPage.xaml", UriKind.RelativeOrAbsolute));
+        }
+
+        private void BtnStore_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow?.NavigateToStorePage();
         }
     }
 }

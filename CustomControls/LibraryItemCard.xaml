@@ -26,21 +26,18 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
-                            <!-- Image Section -->
                             <Border Grid.Row="0" CornerRadius="3">
                                 <Border.Background>
                                     <ImageBrush ImageSource="{Binding ImageSource, ElementName=This}"
                                                 Stretch="UniformToFill"/>
                                 </Border.Background>
 
-                                <!-- Hover Overlay -->
+
                                 <Border Name="MaskBorder"
                                         Background="#FFFFFF"
                                         CornerRadius="3"
                                         Opacity="0"/>
                             </Border>
-
-                            <!-- Info Section -->
                             <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Center" Margin="0,10">
                                 <TextBlock Text="{Binding Title, ElementName=This}"
                                           FontSize="15" FontWeight="Bold"
@@ -61,7 +58,6 @@
                                         <ColumnDefinition Width="38"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <!-- More Options Button -->
                                     <Button Grid.Column="1"
                                             Name="MoreOptionsButton"
                                             Background="Transparent"
@@ -109,13 +105,12 @@
     </UserControl.Resources>
 
     <Grid>
-        <!-- Main Card Button -->
+ 
         <Button Style="{StaticResource CardButtonStyle}"
                 Background="Transparent"
                 VerticalContentAlignment="Top"
                />
 
-        <!-- More Options Popup -->
         <Popup Name="MoreOptionsPopup"
                Placement="Bottom"
                PlacementTarget="{Binding ElementName=MoreOptionsButton}"

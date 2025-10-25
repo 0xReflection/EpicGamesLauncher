@@ -62,7 +62,7 @@ namespace EpicGamesLauncher
             _libraryViewModel.NavigateToStoreRequested += NavigateToStorePage;
         }
 
-        private void NavigateToStorePage()
+        public void NavigateToStorePage()
         {
             var storePage = new StorePage(_storeViewModel); 
             MainFrame.Navigate(storePage);

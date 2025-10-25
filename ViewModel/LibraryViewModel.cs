@@ -69,8 +69,6 @@ namespace EpicGamesLauncher.ViewModel
                 {
                     if (entitlement.Game != null)
                     {
-                        // ДОБАВЬТЕ ОТЛАДКУ ДЛЯ ПРОВЕРКИ
-                        System.Diagnostics.Debug.WriteLine($"Library Game: {entitlement.Game.Title}, Cover: '{entitlement.Game.CoverImage}'");
 
                         Games.Add(entitlement.Game);
                     }
