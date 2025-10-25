@@ -12,5 +12,6 @@ namespace EpicGamesLauncher.Services.Interfaces
         Task<IEnumerable<Entitlement>> GetUserLibraryAsync(int userId);
         Task<bool> HasGameAsync(int userId, int gameId);
         Task<bool> HasDLCAsync(int userId, int dlcId);
+        Task<bool> AddFreeGameToLibraryAsync(int userId, int gameId);
     }
 }

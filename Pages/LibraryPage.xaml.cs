@@ -1,6 +1,4 @@
 ﻿using EpicGamesLauncher.CustomControls;
-using EpicGamesLauncher.Models;
-using EpicGamesLauncher.Services.Interfaces;
 using EpicGamesLauncher.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -21,22 +19,18 @@ using System.Windows.Shapes;
 namespace EpicGamesLauncher.Pages
 {
     /// <summary>
-    /// Interaction logic for StorePage.xaml
+    /// Логика взаимодействия для LibraryPage.xaml
     /// </summary>
-    public partial class StorePage : Page
+    public partial class LibraryPage : Page
     {
-        private readonly StoreViewModel _viewModel;
-
-        public StorePage(StoreViewModel viewModel)
+        private readonly LibraryViewModel _viewModel;
+        public LibraryPage(LibraryViewModel viewModel)
         {
             InitializeComponent();
-
             _viewModel = viewModel;
             DataContext = _viewModel;
 
             _viewModel.Games.CollectionChanged += Games_CollectionChanged;
-            _viewModel.PurchaseSuccess += OnPurchaseSuccess;
-            _viewModel.PurchaseFailed += OnPurchaseFailed;
 
             PopulateGames();
         }
@@ -50,47 +44,46 @@ namespace EpicGamesLauncher.Pages
         {
             GamesWrapPanel.Children.Clear();
 
+            if (_viewModel?.Games?.Count == 0)
+            {
+                EmptyLibraryMessage.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                EmptyLibraryMessage.Visibility = Visibility.Collapsed;
+            }
+
+            if (_viewModel?.Games == null) return;
+
             foreach (var game in _viewModel.Games)
             {
-                var card = new StoreItemCard
+                var card = new LibraryItemCard
                 {
                     DataContext = game,
                     Title = game.Title,
                     Developer = game.Developer?.Name,
                     Genre = string.Join(", ", game.Genres.Select(g => g.Name)),
                     Platform = string.Join(", ", game.Platforms.Select(p => p.Name)),
-                    ImageSource = game.CoverImage,
-                    Price = game.Price > 0 ? $"${game.Price:0.00}" : "Free",
+                    ImageSource = game.CoverImage, // Убедитесь что это свойство заполнено
+                    Price = "In Library",
                     GameId = game.GameId
                 };
 
-                card.PurchaseRequested += async (sender, e) =>
+                // Добавьте отладку для проверки пути картинки
+                if (string.IsNullOrEmpty(game.CoverImage))
                 {
-                    if (sender is StoreItemCard card)
-                        await _viewModel.PurchaseGameByIdAsync(card.GameId);
-                };
-
-                card.AddToLibraryRequested += async (sender, e) =>
+                    System.Diagnostics.Debug.WriteLine($"Game {game.Title} has no cover image");
+                }
+                else
                 {
-                    if (sender is StoreItemCard card)
-                        await _viewModel.AddFreeGameToLibraryAsync(card.GameId);
-                };
+                    System.Diagnostics.Debug.WriteLine($"Game {game.Title} cover: {game.CoverImage}");
+                }
 
                 GamesWrapPanel.Children.Add(card);
             }
-
-            GamesWrapPanel.Children.Add(new StoreItemCard());
         }
 
-        private void OnPurchaseSuccess(string message)
-        {
-            MessageBox.Show(message, "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
 
-        private void OnPurchaseFailed(string message)
-        {
-            MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
@@ -100,12 +93,6 @@ namespace EpicGamesLauncher.Pages
         private void BtnSettings_OnClick(object sender, RoutedEventArgs e)
         {
             NavigationService?.Navigate(new Uri("Pages/SettingsPage.xaml", UriKind.RelativeOrAbsolute));
-        }
-
-        private void BtnLibrary_OnClick(object sender, RoutedEventArgs e)
-        {
-            var mainWindow = Application.Current.MainWindow as MainWindow;
-            mainWindow?.NavigateToLibraryPage();
         }
     }
 }

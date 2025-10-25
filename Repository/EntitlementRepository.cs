@@ -41,13 +41,20 @@ namespace EpicGamesLauncher.Repository
         {
             var entitlements = new List<Entitlement>();
             using var connection = await CreateConnectionAsync();
+
             var query = @"
-            SELECT e.EntitlementId, e.UserId, e.GameId, e.DLCId, e.AcquiredAt,
-                   g.Title as GameTitle
-            FROM Entitlements e
-            LEFT JOIN Games g ON e.GameId = g.GameId
-            WHERE e.UserId = @UserId
-            ORDER BY e.AcquiredAt DESC";
+    SELECT 
+        e.EntitlementId, e.UserId, e.GameId, e.DLCId, e.AcquiredAt,
+        g.GameId, g.Title, g.Description, g.ReleaseDate, g.DeveloperId, 
+        g.PublisherId, g.CoverImage, g.Price, g.CreatedAt,
+        d.DeveloperId, d.Name as DeveloperName,
+        p.PublisherId, p.Name as PublisherName
+    FROM Entitlements e
+    INNER JOIN Games g ON e.GameId = g.GameId
+    LEFT JOIN Developers d ON g.DeveloperId = d.DeveloperId
+    LEFT JOIN Publishers p ON g.PublisherId = p.PublisherId
+    WHERE e.UserId = @UserId AND e.GameId IS NOT NULL
+    ORDER BY e.AcquiredAt DESC";
 
             using var command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@UserId", userId);
@@ -55,15 +62,37 @@ namespace EpicGamesLauncher.Repository
             using var reader = await command.ExecuteReaderAsync();
             while (await reader.ReadAsync())
             {
-                entitlements.Add(new Entitlement
+                var entitlement = new Entitlement
                 {
                     EntitlementId = reader.GetInt32(0),
                     UserId = reader.GetInt32(1),
                     GameId = reader.GetInt32(2),
                     DLCId = reader.IsDBNull(3) ? null : reader.GetInt32(3),
                     AcquiredAt = reader.GetDateTime(4),
-                    Game = new Game { Title = reader.GetString(5) }
-                });
+                    Game = new Game
+                    {
+                        GameId = reader.GetInt32(5),
+                        Title = reader.GetString(6),
+                        Description = reader.IsDBNull(7) ? null : reader.GetString(7),
+                        ReleaseDate = reader.IsDBNull(8) ? null : reader.GetDateTime(8),
+                        DeveloperId = reader.GetInt32(9),
+                        PublisherId = reader.GetInt32(10),
+                        CoverImage = reader.IsDBNull(11) ? null : reader.GetString(11), // ВАЖНО: CoverImage
+                        Price = reader.GetDecimal(12),
+                        CreatedAt = reader.GetDateTime(13),
+                        Developer = new Developer
+                        {
+                            DeveloperId = reader.GetInt32(14),
+                            Name = reader.GetString(15)
+                        },
+                        Publisher = new Publisher
+                        {
+                            PublisherId = reader.GetInt32(16),
+                            Name = reader.GetString(17)
+                        }
+                    }
+                };
+                entitlements.Add(entitlement);
             }
             return entitlements;
         }

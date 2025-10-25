@@ -13,7 +13,7 @@ namespace EpicGamesLauncher.Models.Interfaces
         DateTime? ReleaseDate { get; set; }
         int DeveloperId { get; set; }
         int PublisherId { get; set; }
-        byte[] CoverImage { get; set; }
+        string CoverImage { get; set; }
         decimal Price { get; set; }
         DateTime CreatedAt { get; set; }
 

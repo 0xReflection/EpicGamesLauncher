@@ -100,6 +100,7 @@
     </Compile>
     <Compile Include="Converters\ArcEndPointConverter.cs" />
     <Compile Include="Converters\ArcSizeConverter.cs" />
+    <Compile Include="Converters\IntToVisibilityConverter.cs" />
     <Compile Include="Converters\LocalEx.cs" />
     <Compile Include="Converters\NotZeroConverter.cs" />
     <Compile Include="Converters\PositiveToNegativeConverter.cs" />
@@ -117,6 +118,9 @@
     </Compile>
     <Compile Include="CustomControls\SearchBox.xaml.cs">
       <DependentUpon>SearchBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControls\StoreItemCard.xaml.cs">
+      <DependentUpon>StoreItemCard.xaml</DependentUpon>
     </Compile>
     <Compile Include="Logger\ConsoleLogger.cs" />
     <Compile Include="Logger\Interface\ILogger.cs" />
@@ -145,6 +149,9 @@
     <Compile Include="Models\RegisterRequest.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Pages\LibraryPage.xaml.cs">
+      <DependentUpon>LibraryPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\LoadingPage.xaml.cs">
       <DependentUpon>LoadingPage.xaml</DependentUpon>
     </Compile>
@@ -219,6 +226,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="CustomControls\StoreItemCard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -231,6 +242,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\LibraryPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\LoadingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

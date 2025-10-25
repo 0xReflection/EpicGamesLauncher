@@ -92,7 +92,27 @@ namespace EpicGamesLauncher.Attached_Properties
 
         public static readonly DependencyProperty IconBackgroundHoverProperty =
             DependencyProperty.Register("IconBackgroundHover", typeof(Brush), typeof(BasicMenuButton));
+  
+        public Models.User User
+        {
+            get => (EpicGamesLauncher.Models.User)GetValue(UserProperty);
+            set => SetValue(UserProperty, value);
+        }
 
+        public static readonly DependencyProperty UserProperty =
+            DependencyProperty.Register(
+                "User",
+                typeof(EpicGamesLauncher.Models.User),
+                typeof(BasicMenuButton),
+                new PropertyMetadata(null, OnUserChanged));
+
+        private static void OnUserChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is BasicMenuButton button && e.NewValue is Models.User user)
+            {
+                button.Content = $"{user.Username} — ${user.Balance:F2}";
+            }
+        }
 
     }
 }

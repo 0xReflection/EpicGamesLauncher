@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,30 +26,71 @@ namespace EpicGamesLauncher.CustomControls
             InitializeComponent();
         }
 
+        public static readonly DependencyProperty ImageSourceProperty =
+        DependencyProperty.Register(
+        "ImageSource",
+        typeof(string),
+        typeof(LibraryItemCard),
+        new PropertyMetadata(string.Empty));
 
-
-        public ImageSource ImageSource
+        public string ImageSource
         {
-            get => (ImageSource)GetValue(ImageSourceProperty);
+            get => (string)GetValue(ImageSourceProperty);
             set => SetValue(ImageSourceProperty, value);
         }
 
-        // Using a DependencyProperty as the backing store for ImageSource.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ImageSourceProperty =
-            DependencyProperty.Register("ImageSource", typeof(ImageSource), typeof(LibraryItemCard));
-
-
+        public static readonly DependencyProperty TitleProperty =
+            DependencyProperty.Register("Title", typeof(string), typeof(LibraryItemCard), new PropertyMetadata(string.Empty));
 
         public string Title
         {
-            get { return (string)GetValue(TitleProperty); }
-            set { SetValue(TitleProperty, value); }
+            get => (string)GetValue(TitleProperty);
+            set => SetValue(TitleProperty, value);
         }
 
-        // Using a DependencyProperty as the backing store for Title.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty TitleProperty =
-            DependencyProperty.Register("Title", typeof(string), typeof(LibraryItemCard));
+        public static readonly DependencyProperty DeveloperProperty =
+            DependencyProperty.Register("Developer", typeof(string), typeof(LibraryItemCard), new PropertyMetadata(string.Empty));
 
+        public string Developer
+        {
+            get => (string)GetValue(DeveloperProperty);
+            set => SetValue(DeveloperProperty, value);
+        }
 
+        public static readonly DependencyProperty GenreProperty =
+            DependencyProperty.Register("Genre", typeof(string), typeof(LibraryItemCard), new PropertyMetadata(string.Empty));
+
+        public string Genre
+        {
+            get => (string)GetValue(GenreProperty);
+            set => SetValue(GenreProperty, value);
+        }
+
+        public static readonly DependencyProperty PlatformProperty =
+            DependencyProperty.Register("Platform", typeof(string), typeof(LibraryItemCard), new PropertyMetadata(string.Empty));
+
+        public string Platform
+        {
+            get => (string)GetValue(PlatformProperty);
+            set => SetValue(PlatformProperty, value);
+        }
+        public static readonly DependencyProperty PriceProperty =
+      DependencyProperty.Register("Price", typeof(string), typeof(LibraryItemCard), new PropertyMetadata(string.Empty));
+
+        public string Price
+        {
+            get => (string)GetValue(PriceProperty);
+            set => SetValue(PriceProperty, value);
+        }
+        public static readonly DependencyProperty GameIdProperty =
+          DependencyProperty.Register("GameId", typeof(int), typeof(LibraryItemCard),
+              new PropertyMetadata(0));
+
+        public int GameId
+        {
+            get => (int)GetValue(GameIdProperty);
+            set => SetValue(GameIdProperty, value);
+        }
+    
     }
 }

@@ -64,14 +64,14 @@ namespace EpicGamesLauncher
 
         private void NavigateToStorePage()
         {
-            var storePage = new StorePage { DataContext = _storeViewModel };
+            var storePage = new StorePage(_storeViewModel); 
             MainFrame.Navigate(storePage);
         }
 
-        private void NavigateToLibraryPage()
+        public void NavigateToLibraryPage()
         {
             _libraryViewModel.RefreshData();
-            var libraryPage = new StorePage { DataContext = _libraryViewModel };
+            var libraryPage = new LibraryPage(_libraryViewModel);
             MainFrame.Navigate(libraryPage);
         }
     }

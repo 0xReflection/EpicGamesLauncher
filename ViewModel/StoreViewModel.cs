@@ -44,7 +44,6 @@ namespace EpicGamesLauncher.ViewModel
             SearchGamesCommand = new AsyncCommand(SearchGamesAsync, () => !IsLoading);
             PurchaseGameCommand = new AsyncCommand(PurchaseSelectedGameAsync, () => CanPurchaseGame);
             ViewGameDetailsCommand = new AsyncCommand<Game>(ViewGameDetailsAsync);
-            NavigateToLibraryCommand = new AsyncCommand(NavigateToLibrary);
 
             _ = InitializeAsync();
         }
@@ -100,22 +99,34 @@ namespace EpicGamesLauncher.ViewModel
         public User CurrentUser
         {
             get => _currentUser;
-            set => SetProperty(ref _currentUser, value);
+            set
+            {
+                if (SetProperty(ref _currentUser, value))
+                {
+                    OnPropertyChanged(nameof(UserBalance));
+                    OnPropertyChanged(nameof(UserButtonText));
+                }
+            }
         }
 
         public decimal UserBalance => CurrentUser?.Balance ?? 0;
+
+        public string UserButtonText => CurrentUser != null
+                 ? $"{CurrentUser.Username} — ${CurrentUser.Balance:F2}"
+                 : "Offline";
 
         public AsyncCommand LoadGamesCommand { get; }
         public AsyncCommand SearchGamesCommand { get; }
         public AsyncCommand PurchaseGameCommand { get; }
         public AsyncCommand<Game> ViewGameDetailsCommand { get; }
-        public AsyncCommand NavigateToLibraryCommand { get; }
+
 
         public event Action<Game> GameSelected;
         public event Action<string> PurchaseSuccess;
         public event Action<string> PurchaseFailed;
         public event Action<string> ErrorOccurred;
         public event Action NavigateToLibraryRequested;
+        public event Action UserButtonClicked;
 
         private async Task InitializeAsync()
         {
@@ -239,6 +250,43 @@ namespace EpicGamesLauncher.ViewModel
         }
 
         private bool CanPurchaseGame => !IsLoading && SelectedGame != null && CurrentUser != null;
+        public async Task<bool> PurchaseGameByIdAsync(int gameId)
+        {
+            var game = Games.FirstOrDefault(g => g.GameId == gameId);
+            if (game != null)
+            {
+                SelectedGame = game;
+                await PurchaseSelectedGameAsync();
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> AddFreeGameToLibraryAsync(int gameId)
+        {
+            try
+            {
+                var game = Games.FirstOrDefault(g => g.GameId == gameId);
+                if (game != null && game.Price == 0)
+                {
+                    if (await _libraryService.HasGameAsync(CurrentUser.UserId, gameId))
+                    {
+                        PurchaseFailed?.Invoke("You already own this game");
+                        return false;
+                    }
+
+                    await _libraryService.AddFreeGameToLibraryAsync(CurrentUser.UserId, gameId);
+                    PurchaseSuccess?.Invoke($"Successfully added {game.Title} to library");
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                ErrorOccurred?.Invoke("Failed to add game to library");
+                return false;
+            }
+        }
 
         private async Task PurchaseSelectedGameAsync()
         {
@@ -258,11 +306,12 @@ namespace EpicGamesLauncher.ViewModel
                 {
                     var newBalance = await _authService.GetUserBalanceAsync(CurrentUser.UserId);
                     CurrentUser.Balance = newBalance;
-                    OnPropertyChanged(nameof(UserBalance)); // Уведомляем об изменении баланса
-
-                    PurchaseSuccess?.Invoke($"Successfully purchased {SelectedGame.Title}");
 
                    
+                    OnPropertyChanged(nameof(UserBalance));
+                    OnPropertyChanged(nameof(UserButtonText)); 
+
+                    PurchaseSuccess?.Invoke($"Successfully purchased {SelectedGame.Title}");
                 }
                 else
                 {
@@ -278,23 +327,29 @@ namespace EpicGamesLauncher.ViewModel
                 IsLoading = false;
             }
         }
+        public void RefreshUserData()
+        {
+            CurrentUser = App.CurrentUser;
+            
+            OnPropertyChanged(nameof(UserBalance));
+            OnPropertyChanged(nameof(UserButtonText));
+        }
 
+      
+        public void UpdateUserBalance(decimal newBalance)
+        {
+            if (CurrentUser != null)
+            {
+                CurrentUser.Balance = newBalance;
+                OnPropertyChanged(nameof(UserBalance));
+                OnPropertyChanged(nameof(UserButtonText));
+            }
+        }
         private Task ViewGameDetailsAsync(Game game)
         {
             SelectedGame = game;
             GameSelected?.Invoke(game);
             return Task.CompletedTask;
-        }
-
-        private Task NavigateToLibrary()
-        {
-            NavigateToLibraryRequested?.Invoke();
-            return Task.CompletedTask;
-        }
-        public void RefreshUserData()
-        {
-            CurrentUser = App.CurrentUser;
-            OnPropertyChanged(nameof(UserBalance));
-        }
+        } 
     }
 }

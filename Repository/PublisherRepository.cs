@@ -101,7 +101,7 @@ namespace EpicGamesLauncher.Repository
                     ReleaseDate = reader.IsDBNull(3) ? null : reader.GetDateTime(3),
                     DeveloperId = reader.GetInt32(4),
                     PublisherId = reader.GetInt32(5),
-                    CoverImage = reader[6] as byte[],
+                    CoverImage = reader.IsDBNull(6) ? null : reader.GetString(6),
                     Price = reader.GetDecimal(7),
                     CreatedAt = reader.GetDateTime(8),
                     Developer = new Developer { Name = reader.GetString(9) },

@@ -14,7 +14,7 @@ namespace EpicGamesLauncher.Models
         public DateTime? ReleaseDate { get; set; }
         public int DeveloperId { get; set; }
         public int PublisherId { get; set; }
-        public byte[] CoverImage { get; set; }
+        public string CoverImage { get; set; }
         public decimal Price { get; set; }
         public DateTime CreatedAt { get; set; }
 
@@ -23,6 +23,8 @@ namespace EpicGamesLauncher.Models
         public Publisher Publisher { get; set; }
         public List<Genre> Genres { get; set; } = new List<Genre>();
         public List<Platform> Platforms { get; set; } = new List<Platform>();
+        public string GenresString => Genres != null ? string.Join(", ", Genres.Select(g => g.Name)) : "";
+        public string PlatformsString => Platforms != null ? string.Join(", ", Platforms.Select(p => p.Name)) : "";
     }
 
 }

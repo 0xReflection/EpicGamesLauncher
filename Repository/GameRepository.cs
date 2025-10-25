@@ -6,7 +6,6 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace EpicGamesLauncher.Repository
 {
     public class GameRepository : RepositoryBase<Game>, IGameRepository
@@ -37,7 +36,7 @@ namespace EpicGamesLauncher.Repository
                     ReleaseDate = reader.IsDBNull(3) ? null : reader.GetDateTime(3),
                     DeveloperId = reader.GetInt32(4),
                     PublisherId = reader.GetInt32(5),
-                    CoverImage = reader[6] as byte[],
+                    CoverImage = reader.IsDBNull(6) ? null : reader.GetString(6), 
                     Price = reader.GetDecimal(7),
                     CreatedAt = reader.GetDateTime(8),
                     Developer = new Developer { Name = reader.GetString(9) },
@@ -78,7 +77,7 @@ namespace EpicGamesLauncher.Repository
                     ReleaseDate = reader.IsDBNull(3) ? null : reader.GetDateTime(3),
                     DeveloperId = reader.GetInt32(4),
                     PublisherId = reader.GetInt32(5),
-                    CoverImage = reader[6] as byte[],
+                    CoverImage = reader.IsDBNull(6) ? null : reader.GetString(6), // Изменено
                     Price = reader.GetDecimal(7),
                     CreatedAt = reader.GetDateTime(8),
                     Developer = new Developer { Name = reader.GetString(9) },
@@ -125,7 +124,7 @@ namespace EpicGamesLauncher.Repository
                     ReleaseDate = reader.IsDBNull(3) ? null : reader.GetDateTime(3),
                     DeveloperId = reader.GetInt32(4),
                     PublisherId = reader.GetInt32(5),
-                    CoverImage = reader[6] as byte[],
+                    CoverImage = reader.IsDBNull(6) ? null : reader.GetString(6), // Изменено
                     Price = reader.GetDecimal(7),
                     CreatedAt = reader.GetDateTime(8),
                     Developer = new Developer { Name = reader.GetString(9) },
@@ -171,7 +170,7 @@ namespace EpicGamesLauncher.Repository
                     ReleaseDate = reader.IsDBNull(3) ? null : reader.GetDateTime(3),
                     DeveloperId = reader.GetInt32(4),
                     PublisherId = reader.GetInt32(5),
-                    CoverImage = reader[6] as byte[],
+                    CoverImage = reader.IsDBNull(6) ? null : reader.GetString(6), // Изменено
                     Price = reader.GetDecimal(7),
                     CreatedAt = reader.GetDateTime(8),
                     Developer = new Developer { Name = reader.GetString(9) },
@@ -216,7 +215,7 @@ namespace EpicGamesLauncher.Repository
                     ReleaseDate = reader.IsDBNull(3) ? null : reader.GetDateTime(3),
                     DeveloperId = reader.GetInt32(4),
                     PublisherId = reader.GetInt32(5),
-                    CoverImage = reader[6] as byte[],
+                    CoverImage = reader.IsDBNull(6) ? null : reader.GetString(6), // Изменено
                     Price = reader.GetDecimal(7),
                     CreatedAt = reader.GetDateTime(8),
                     Developer = new Developer { Name = reader.GetString(9) },
@@ -313,7 +312,7 @@ namespace EpicGamesLauncher.Repository
             command.Parameters.AddWithValue("@ReleaseDate", game.ReleaseDate ?? (object)DBNull.Value);
             command.Parameters.AddWithValue("@DeveloperId", game.DeveloperId);
             command.Parameters.AddWithValue("@PublisherId", game.PublisherId);
-            command.Parameters.AddWithValue("@CoverImage", game.CoverImage ?? (object)DBNull.Value);
+            command.Parameters.AddWithValue("@CoverImage", game.CoverImage ?? (object)DBNull.Value); // Изменено
             command.Parameters.AddWithValue("@Price", game.Price);
 
             return (int)await command.ExecuteScalarAsync();
@@ -336,7 +335,7 @@ namespace EpicGamesLauncher.Repository
             command.Parameters.AddWithValue("@ReleaseDate", game.ReleaseDate ?? (object)DBNull.Value);
             command.Parameters.AddWithValue("@DeveloperId", game.DeveloperId);
             command.Parameters.AddWithValue("@PublisherId", game.PublisherId);
-            command.Parameters.AddWithValue("@CoverImage", game.CoverImage ?? (object)DBNull.Value);
+            command.Parameters.AddWithValue("@CoverImage", game.CoverImage ?? (object)DBNull.Value); // Изменено
             command.Parameters.AddWithValue("@Price", game.Price);
 
             return await command.ExecuteNonQueryAsync() > 0;

@@ -47,7 +47,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Border
+        <!--<Border
             Grid.Row="0"
             Style="{StaticResource SignInPopup}">
             <StackPanel
@@ -65,7 +65,7 @@
         Click="ButtonBase_OnClick"
         Style="{StaticResource PrimaryButtonStyle}"/>
             </StackPanel>
-        </Border>
+        </Border>-->
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -121,6 +121,7 @@
                             Style="{StaticResource SideNavigationCheckableMenuButtonsStyle}"/>
                             <attachedProperties:CheckableMenuButton
                             Content="Library"
+                             Click="BtnLibrary_OnClick"
                             Icon="{StaticResource LibraryIcon}"
                             Style="{StaticResource SideNavigationCheckableMenuButtonsStyle}"/>
                             <attachedProperties:CheckableMenuButton
@@ -132,10 +133,10 @@
 
                     <attachedProperties:SideNavigationMenu.FooterMenuButtonsContainer>
                         <StackPanel Orientation="Vertical">
-                            <attachedProperties:BasicMenuButton
+                            <!--<attachedProperties:BasicMenuButton
     Content="Downloads"
     Icon="{StaticResource DownloadsIcon}"
-    Style="{StaticResource SideNavigationBasicMenuButtonsStyle}"/>
+    Style="{StaticResource SideNavigationBasicMenuButtonsStyle}"/>-->
                             <attachedProperties:BasicMenuButton
     Content="Settings"
     x:Name="BtnSettings"
@@ -143,7 +144,8 @@
     Style="{StaticResource SideNavigationBasicMenuButtonsStyle}"
     Click="BtnSettings_OnClick"/>
                             <attachedProperties:BasicMenuButton
-    Content="Offline"
+    Content="{Binding UserButtonText}"
+    Command="{Binding UserButtonClickCommand}"
     Icon="{StaticResource OfflineIcon}"
     Style="{StaticResource SideNavigationBasicMenuButtonsStyle}"/>
                         </StackPanel>
@@ -156,17 +158,17 @@
                 Margin="34">
                 <Grid.RowDefinitions>
                     <RowDefinition
-                                         Height="Auto"/>
+                     Height="Auto"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition/>
                         <ColumnDefinition Width="178"/>
-                        <ColumnDefinition Width="417"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
                         <ColumnDefinition Width="Auto" MinWidth="274"/>
                     </Grid.ColumnDefinitions>
 
@@ -232,18 +234,9 @@
                               VerticalAlignment="Top"
                               Margin="18,37,0,0"
                               VerticalScrollBarVisibility="Auto">
-                    <WrapPanel>
-<customControls:LibraryItemCard
-    ImageSource="../Resources/brave.png"
-    Margin="0,0,20,0"
-    Title="Brave"/>
-<customControls:LibraryItemCard
-    ImageSource="../Resources/fortnite.jpg"
-    Margin="0,0,20,0"
-    Title="Fortnite"/>
-<customControls:LibraryShopCard/>
-                    </WrapPanel>
+                    <WrapPanel x:Name="GamesWrapPanel"/>
                 </ScrollViewer>
+                
             </Grid>
         </Grid>
     </Grid>

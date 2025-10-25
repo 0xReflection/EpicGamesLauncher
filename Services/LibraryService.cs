@@ -59,5 +59,28 @@ namespace EpicGamesLauncher.Services
                 return false;
             }
         }
+        public async Task<bool> AddFreeGameToLibraryAsync(int userId, int gameId)
+        {
+            try
+            {
+                if (await HasGameAsync(userId, gameId))
+                {
+                    _logger.LogWarning($"User {userId} already owns game {gameId}");
+                    return false;
+                }
+
+                var success = await _entitlementRepository.AddGameToLibraryAsync(userId, gameId);
+                if (success)
+                {
+                    _logger.LogInformation($"User {userId} added free game {gameId} to library");
+                }
+                return success;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error adding free game {gameId} to library for user {userId}");
+                return false;
+            }
+        }
     }
 }
