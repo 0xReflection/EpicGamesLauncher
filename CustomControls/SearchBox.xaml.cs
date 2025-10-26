@@ -16,9 +16,7 @@ using System.Windows.Threading;
 
 namespace EpicGamesLauncher.CustomControls
 {
-    /// <summary>
-    /// Interaction logic for SearchBox.xaml
-    /// </summary>
+  
     public partial class SearchBox : UserControl
     {
         public static readonly DependencyProperty SearchTextProperty =

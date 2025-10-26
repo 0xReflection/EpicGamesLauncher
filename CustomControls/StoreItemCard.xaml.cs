@@ -111,11 +111,11 @@ namespace EpicGamesLauncher.CustomControls
         {
             if (IsFree)
             {
-                ActionButton.Content = "Добавить в библиотеку";
+                ActionButton.Content = "Add to library";
             }
             else
             {
-                ActionButton.Content = $"Купить - {Price}";
+                ActionButton.Content = $"Buy - {Price}";
             }
         }
 
@@ -160,12 +160,12 @@ namespace EpicGamesLauncher.CustomControls
             {
                
                 AddToLibraryRequested?.Invoke(this, e);
-                MessageBox.Show($"Игра {Title} добавлена в библиотеку");
+           
             }
             else
             {
                 PurchaseRequested?.Invoke(this, e);
-                MessageBox.Show($"Покупка игры: {Title} за {Price}");
+             
             }
         }
     }

@@ -15,10 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace EpicGamesLauncher.CustomControls
-{
-    /// <summary>
-    /// Interaction logic for LibraryItemCard.xaml
-    /// </summary>
+{ 
     public partial class LibraryItemCard : UserControl
     {
         public LibraryItemCard()

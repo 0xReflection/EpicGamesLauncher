@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace EpicGamesLauncher.CustomControls
 {
-    /// <summary>
-    /// Interaction logic for LibraryShopCard.xaml
-    /// </summary>
     public partial class LibraryShopCard : UserControl
     {
         public LibraryShopCard()
