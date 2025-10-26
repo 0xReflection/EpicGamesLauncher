@@ -51,11 +51,11 @@ namespace EpicGamesLauncher
             var authService = new AuthService(userRepository, authLogger);
             var catalogService = new CatalogService(gameRepository, genreRepository, platformRepository, dlcRepository, catalogLogger);
             var orderService = new OrderService(transactionRepository, entitlementRepository, userRepository, gameRepository, dlcRepository, orderLogger);
-            var libraryService = new LibraryService(entitlementRepository, libraryLogger);
+            var libraryService = new LibraryService(entitlementRepository, gameRepository, libraryLogger);
 
 
             _storeViewModel = new StoreViewModel(catalogService, orderService, libraryService, authService);
-            _libraryViewModel = new LibraryViewModel(libraryService);
+            _libraryViewModel = new LibraryViewModel(libraryService, authService);
 
 
             _storeViewModel.NavigateToLibraryRequested += NavigateToLibraryPage;

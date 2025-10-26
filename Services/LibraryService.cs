@@ -7,17 +7,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace EpicGamesLauncher.Services
 {
     public class LibraryService : ILibraryService
     {
         private readonly IEntitlementRepository _entitlementRepository;
+        private readonly IGameRepository _gameRepository; 
         private readonly ILogger<LibraryService> _logger;
 
-        public LibraryService(IEntitlementRepository entitlementRepository, ILogger<LibraryService> logger)
+        public LibraryService(
+            IEntitlementRepository entitlementRepository,
+            IGameRepository gameRepository, 
+            ILogger<LibraryService> logger)
         {
             _entitlementRepository = entitlementRepository;
+            _gameRepository = gameRepository;
             _logger = logger;
         }
 
@@ -31,6 +35,34 @@ namespace EpicGamesLauncher.Services
             {
                 _logger.LogError(ex, $"Error getting library for user {userId}");
                 return new List<Entitlement>();
+            }
+        }
+
+        public async Task<IEnumerable<Game>> GetGamesByGenreAsync(int userId, string genreSlug)
+        {
+            try
+            {
+                var entitlements = await _entitlementRepository.GetUserLibraryAsync(userId);
+                var games = new List<Game>();
+
+                foreach (var entitlement in entitlements)
+                {
+                    if (entitlement.Game != null)
+                    {
+                        var fullGame = await _gameRepository.GetByIdAsync(entitlement.Game.GameId);
+                        if (fullGame != null && fullGame.Genres.Any(g => g.Slug == genreSlug))
+                        {
+                            games.Add(fullGame);
+                        }
+                    }
+                }
+
+                return games;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error getting games by genre {genreSlug} for user {userId}");
+                return new List<Game>();
             }
         }
 
@@ -59,6 +91,7 @@ namespace EpicGamesLauncher.Services
                 return false;
             }
         }
+
         public async Task<bool> AddFreeGameToLibraryAsync(int userId, int gameId)
         {
             try

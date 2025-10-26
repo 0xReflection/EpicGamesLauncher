@@ -13,6 +13,7 @@ namespace EpicGamesLauncher.Services.Interfaces
         Task<bool> RegisterAsync(string username, string email, string password);
         Task<bool> UserExistsAsync(string username);
         Task<decimal> GetUserBalanceAsync(int userId);
+        Task<User> GetCurrentUserAsync();
     }
 
 }

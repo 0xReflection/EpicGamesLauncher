@@ -450,7 +450,7 @@
     <Grid>
         <Button
             Style="{StaticResource SettingsNavBackButtonStyle}"
-            Click="ButtonBase_OnClick"/>
+            Click="BtnStore_Click"/>
 
         <StackPanel>
             <StackPanel

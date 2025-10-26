@@ -139,10 +139,13 @@ Style="{StaticResource SideNavigationBasicMenuButtonsStyle}"/>
 
                     <StackPanel Grid.Column="2" Orientation="Horizontal">
                         <TextBlock FontSize="17" Text="Filter:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <ComboBox HorizontalAlignment="Left" VerticalAlignment="Center" SelectedIndex="0"
-                                 Style="{StaticResource FlatComboBoxStyle1}">
-                            <ComboBoxItem Content="All" />
-                            <ComboBoxItem Content="Installed"/>
+                        <ComboBox
+ HorizontalAlignment="Left"
+ VerticalAlignment="Center"
+ SelectedIndex="0"
+ Style="{StaticResource FlatComboBoxStyle1}"
+ ItemsSource="{Binding GenreFilters}"
+ SelectedItem="{Binding SelectedGenre}">
                         </ComboBox>
                     </StackPanel>
 

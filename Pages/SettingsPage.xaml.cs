@@ -35,7 +35,11 @@ namespace EpicGamesLauncher.Pages
                 return;
             }
         }
-
+        private void BtnStore_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow?.NavigateToStorePage();
+        }
         private void Hyperlink_OnRequestNavigate(object sender, RequestNavigateEventArgs e)
         {
             if (((Hyperlink) e.Source).Inlines.FirstOrDefault() is Run run && !run.Text.Contains("Logs"))

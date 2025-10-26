@@ -15,26 +15,16 @@ namespace EpicGamesLauncher
 
         protected void ApplicationStart(object sender, StartupEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("ApplicationStart called");
-
             var authWindow = new AuthWindow();
             bool? result = authWindow.ShowDialog();
-
-            System.Diagnostics.Debug.WriteLine($"Dialog result: {result}, User: {CurrentUser?.Username}");
-
             if (result == true && CurrentUser != null)
             {
-                System.Diagnostics.Debug.WriteLine("Opening MainWindow...");
-
                 var mainWindow = new MainWindow();
                 this.MainWindow = mainWindow;
                 mainWindow.Show();
-
-                System.Diagnostics.Debug.WriteLine("MainWindow should be visible now");
             }
             else
             {
-                System.Diagnostics.Debug.WriteLine("Authentication failed - shutting down");
                 Shutdown();
             }
         }

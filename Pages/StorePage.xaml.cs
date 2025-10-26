@@ -20,9 +20,7 @@ using System.Windows.Shapes;
 
 namespace EpicGamesLauncher.Pages
 {
-    /// <summary>
-    /// Interaction logic for StorePage.xaml
-    /// </summary>
+
     public partial class StorePage : Page
     {
         private readonly StoreViewModel _viewModel;

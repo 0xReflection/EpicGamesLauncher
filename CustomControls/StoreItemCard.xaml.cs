@@ -16,9 +16,6 @@ using System.Windows.Shapes;
 
 namespace EpicGamesLauncher.CustomControls
 {
-    /// <summary>
-    /// Логика взаимодействия для StoreItemCard.xaml
-    /// </summary>
     public partial class StoreItemCard : UserControl
     {
         public StoreItemCard()
@@ -94,7 +91,6 @@ namespace EpicGamesLauncher.CustomControls
 
         public bool IsFree => IsPriceFree(Price);
 
-        // События для внешней обработки
         public event RoutedEventHandler PurchaseRequested;
         public event RoutedEventHandler AddToLibraryRequested;
 
@@ -113,7 +109,6 @@ namespace EpicGamesLauncher.CustomControls
 
         private void UpdateActionButtonText()
         {
-            // Проверяем цену и обновляем текст кнопки
             if (IsFree)
             {
                 ActionButton.Content = "Добавить в библиотеку";
@@ -129,10 +124,10 @@ namespace EpicGamesLauncher.CustomControls
             if (string.IsNullOrEmpty(price))
                 return true;
 
-            // Приводим к нижнему регистру для проверки
+         
             var lowerPrice = price.ToLowerInvariant();
 
-            // Проверяем различные варианты бесплатной цены
+           
             if (lowerPrice == "free" || lowerPrice == "бесплатно" ||
                 lowerPrice == "0" || lowerPrice == "0.00" ||
                 lowerPrice == "$0" || lowerPrice == "$0.00" ||
@@ -141,13 +136,13 @@ namespace EpicGamesLauncher.CustomControls
                 return true;
             }
 
-            // Пытаемся распарсить числовое значение
+          
             if (decimal.TryParse(price, NumberStyles.Currency, CultureInfo.InvariantCulture, out decimal result))
             {
                 return result == 0;
             }
 
-            // Убираем символы валюты и пробелы, затем проверяем
+         
             var cleanPrice = new string(price.Where(c => char.IsDigit(c) || c == '.' || c == ',').ToArray());
             if (decimal.TryParse(cleanPrice, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal cleanResult))
             {
@@ -163,13 +158,12 @@ namespace EpicGamesLauncher.CustomControls
 
             if (IsFree)
             {
-                // Если бесплатно - добавление в библиотеку
+               
                 AddToLibraryRequested?.Invoke(this, e);
                 MessageBox.Show($"Игра {Title} добавлена в библиотеку");
             }
             else
             {
-                // Если цена больше 0 - покупка
                 PurchaseRequested?.Invoke(this, e);
                 MessageBox.Show($"Покупка игры: {Title} за {Price}");
             }

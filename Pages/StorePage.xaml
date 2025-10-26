@@ -177,12 +177,12 @@
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"/>
                         <ComboBox
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            SelectedIndex="0"
-                            Style="{StaticResource FlatComboBoxStyle1}">
-                            <ComboBoxItem Content="All" />
-                            <ComboBoxItem Content="Installed"/>
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        SelectedIndex="0"
+                        Style="{StaticResource FlatComboBoxStyle1}"
+                        ItemsSource="{Binding GenreFilters}"
+                        SelectedItem="{Binding SelectedGenre}">
                         </ComboBox>
                     </StackPanel>
                     <StackPanel Grid.Column="4"
@@ -204,6 +204,9 @@
                     </StackPanel>
 
                     <customControls:SearchBox
+                        SearchText="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}"
+                        SearchCommand="{Binding SearchGamesCommandSB}"
+                        ClearSearchCommand="{Binding ClearSearchCommand}"
                         Grid.Column="5"
                         Margin="2"
                         Width="255"

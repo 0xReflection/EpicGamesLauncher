@@ -195,9 +195,11 @@
     <Compile Include="Services\Interfaces\ICatalogService.cs" />
     <Compile Include="Services\Interfaces\ILibraryService.cs" />
     <Compile Include="Services\Interfaces\IOrderService.cs" />
+    <Compile Include="Services\Interfaces\ISearchService.cs" />
     <Compile Include="Services\Interfaces\IUserService.cs" />
     <Compile Include="Services\LibraryService.cs" />
     <Compile Include="Services\OrderService.cs" />
+    <Compile Include="Services\SearchService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Style\Window.cs" />
     <Compile Include="ViewModel\AsyncCommand.cs" />

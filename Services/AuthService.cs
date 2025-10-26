@@ -14,13 +14,33 @@ namespace EpicGamesLauncher.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly ILogger<AuthService> _logger;
-
+        private User _currentUser;
         public AuthService(IUserRepository userRepository, ILogger<AuthService> logger)
         {
             _userRepository = userRepository;
             _logger = logger;
         }
+        public async Task<User> GetCurrentUserAsync()
+        {
+            try
+            {
+               
+                if (_currentUser != null)
+                    return _currentUser;
+                if (App.CurrentUser != null)
+                {
+                    _currentUser = await _userRepository.GetByIdAsync(App.CurrentUser.UserId);
+                    return _currentUser;
+                }
 
+                return null;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error getting current user");
+                return null;
+            }
+        }
         public async Task<User> LoginAsync(string username, string password)
         {
             try
