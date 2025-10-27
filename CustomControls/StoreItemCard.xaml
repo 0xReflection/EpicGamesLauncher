@@ -53,7 +53,7 @@
                                 <TextBlock Text="{Binding Platform, ElementName=This}"
                                           FontSize="12" Foreground="Gray"/>
                                 <TextBlock Text="{Binding Price, ElementName=This}"
-                                          FontSize="19" Foreground="Gray"/>
+                                          FontSize="19" Foreground="White" FontWeight="Bold"/>
 
                                 <Grid>
                                     <Grid.ColumnDefinitions>

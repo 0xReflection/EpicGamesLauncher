@@ -87,12 +87,12 @@
                 <attachedProperties:SideNavigationMenu Grid.Row="1">
                     <attachedProperties:SideNavigationMenu.MenuButtonsContainer>
                         <StackPanel Orientation="Vertical">
-                            <attachedProperties:CheckableMenuButton Content="Home" Icon="{StaticResource HomeIcon}"
+                            <attachedProperties:CheckableMenuButton Content="Главная страница" Icon="{StaticResource HomeIcon}"
                                 Style="{StaticResource SideNavigationCheckableMenuButtonsStyle}"/>
-                            <attachedProperties:CheckableMenuButton Content="Store" Icon="{StaticResource StoreIcon}"
+                            <attachedProperties:CheckableMenuButton Content="Магазин" Icon="{StaticResource StoreIcon}"
                                                                     Click="BtnStore_Click"
                                 Style="{StaticResource SideNavigationCheckableMenuButtonsStyle}"/>
-                            <attachedProperties:CheckableMenuButton Content="Library" Icon="{StaticResource LibraryIcon}"
+                            <attachedProperties:CheckableMenuButton Content="Библиотека" Icon="{StaticResource LibraryIcon}"
                                 Style="{StaticResource SideNavigationCheckableMenuButtonsStyle}"/>
                             <attachedProperties:CheckableMenuButton Content="Unreal Engine" Icon="{StaticResource UnrealEngineIcon}"
                                 Style="{StaticResource SideNavigationCheckableMenuButtonsStyle}"/>
@@ -102,7 +102,7 @@
                     <attachedProperties:SideNavigationMenu.FooterMenuButtonsContainer>
                         <StackPanel Orientation="Vertical">
                          
-                            <attachedProperties:BasicMenuButton Content="Settings" x:Name="BtnSettings"
+                            <attachedProperties:BasicMenuButton Content="Настройки" x:Name="BtnSettings"
                                 Icon="{StaticResource SettingsIcon}" Style="{StaticResource SideNavigationBasicMenuButtonsStyle}"
                                 Click="BtnSettings_OnClick"/>
                             <attachedProperties:BasicMenuButton
@@ -130,15 +130,15 @@ Style="{StaticResource SideNavigationBasicMenuButtonsStyle}"/>
                         <ColumnDefinition Width="Auto" MinWidth="274"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock FontSize="17" Text="Sort by:" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8,0"/>
+                    <TextBlock FontSize="17" Text="Сортировать:" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8,0"/>
                     <ComboBox Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" SelectedIndex="0"
                              Style="{StaticResource FlatComboBoxStyle1}">
-                        <ComboBoxItem Content="Recent" />
-                        <ComboBoxItem Content="Alphabetical"/>
+                        <ComboBoxItem Content="Недавние" />
+                        <ComboBoxItem Content="Алфавит"/>
                     </ComboBox>
 
                     <StackPanel Grid.Column="2" Orientation="Horizontal">
-                        <TextBlock FontSize="17" Text="Filter:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBlock FontSize="17" Text="Фильтр:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         <ComboBox
  HorizontalAlignment="Left"
  VerticalAlignment="Center"

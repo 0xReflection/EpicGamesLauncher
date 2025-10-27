@@ -382,7 +382,7 @@
             <Button x:Name="btnLogin" 
          Command="{Binding LoginCommand}"
          BorderThickness="0"
-         Content="Log in"
+         Content="ВОЙТИ"
          Foreground="White"
          FontSize="12"
          FontFamily="Montserrat"
@@ -416,13 +416,13 @@
              HorizontalAlignment="Left"
              Margin="302,412,0,1">
 
-                <TextBlock Text="Forget password?"
+                <TextBlock Text="Забыли пароль?"
             Foreground="DarkGray"
             FontSize="12"
             FontWeight="Medium"
             FontFamily="Montserrat" Height="24"/>
 
-                <TextBlock Text="Recover"
+                <TextBlock Text="Восстановить"
             
             Foreground="White"
             FontSize="12"

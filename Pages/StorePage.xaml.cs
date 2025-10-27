@@ -58,7 +58,7 @@ namespace EpicGamesLauncher.Pages
                     Genre = string.Join(", ", game.Genres.Select(g => g.Name)),
                     Platform = string.Join(", ", game.Platforms.Select(p => p.Name)),
                     ImageSource = game.CoverImage,
-                    Price = game.Price > 0 ? $"${game.Price:0.00}" : "Free",
+                    Price = game.Price > 0 ? $"${game.Price:0.00}" : "Бесплатно",
                     GameId = game.GameId
                 };
 
@@ -82,12 +82,12 @@ namespace EpicGamesLauncher.Pages
 
         private void OnPurchaseSuccess(string message)
         {
-            MessageBox.Show(message, "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show(message, "Вы удачно приобрели игру. Спасибо!", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void OnPurchaseFailed(string message)
         {
-            MessageBox.Show(message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show(message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)

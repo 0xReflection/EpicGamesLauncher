@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36518.9 d17.14
+VisualStudioVersion = 17.14.36518.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EpicGamesLauncher", "EpicGamesLauncher.csproj", "{7ABB993E-EF57-4A0C-8AC9-53889904C1CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "epg_unit_test", "..\epg_unit_test\epg_unit_test.csproj", "{B38146BB-0189-4E4B-ADBF-1B91515E7242}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{7ABB993E-EF57-4A0C-8AC9-53889904C1CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7ABB993E-EF57-4A0C-8AC9-53889904C1CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7ABB993E-EF57-4A0C-8AC9-53889904C1CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B38146BB-0189-4E4B-ADBF-1B91515E7242}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B38146BB-0189-4E4B-ADBF-1B91515E7242}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B38146BB-0189-4E4B-ADBF-1B91515E7242}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B38146BB-0189-4E4B-ADBF-1B91515E7242}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

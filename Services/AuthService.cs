@@ -52,12 +52,10 @@ namespace EpicGamesLauncher.Services
                     return null;
                 }
 
-                // Генерируем SHA-256 хеш для проверки
                 using var sha256 = System.Security.Cryptography.SHA256.Create();
                 var passwordBytes = System.Text.Encoding.UTF8.GetBytes(password);
                 var computedHash = sha256.ComputeHash(passwordBytes);
 
-                // Сравниваем хеши 
                 if (!computedHash.SequenceEqual(user.PasswordHash))
                 {
                     _logger.LogWarning($"Login failed: Invalid password for user {username}");

@@ -274,7 +274,6 @@ namespace EpicGamesLauncher.ViewModel
                 ErrorMessage = string.Empty;
                 RaiseCanExecuteChanged();
 
-                // Конвертируем SecureString в обычную строку
                 string password = SecureStringToString(Password);
 
                 var user = await _authService.LoginAsync(Username, password);
@@ -285,13 +284,13 @@ namespace EpicGamesLauncher.ViewModel
                 }
                 else
                 {
-                    ErrorMessage = "Invalid username or password";
+                    ErrorMessage = "Неверный логин или пароль";
                     AuthenticationFailed?.Invoke(ErrorMessage);
                 }
             }
             catch (Exception ex)
             {
-                ErrorMessage = "Login failed. Please try again.";
+                ErrorMessage = "Ошибка входа. Попробуйте еще раз";
                 AuthenticationFailed?.Invoke(ErrorMessage);
             }
             finally
@@ -309,7 +308,7 @@ namespace EpicGamesLauncher.ViewModel
                 ErrorMessage = string.Empty;
                 RaiseCanExecuteChanged();
 
-                // Конвертируем SecureString в обычную строку
+                
                 string password = SecureStringToString(Password);
 
                 var success = await _authService.RegisterAsync(Username, Email, password);

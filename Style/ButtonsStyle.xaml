@@ -371,7 +371,7 @@
         <Setter Property="Height" Value="72"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Content" Value="SETTINGS"/>
+        <Setter Property="Content" Value="Настройки"/>
         <Setter Property="VerticalAlignment" Value="Top"/>
         <Setter Property="Template">
             <Setter.Value>

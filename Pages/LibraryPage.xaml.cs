@@ -63,7 +63,7 @@ namespace EpicGamesLauncher.Pages
                     Genre = string.Join(", ", game.Genres.Select(g => g.Name)),
                     Platform = string.Join(", ", game.Platforms.Select(p => p.Name)),
                     ImageSource = game.CoverImage,
-                    Price = "In Library",
+                    Price = "Приобретено",
                     GameId = game.GameId
                 };
 

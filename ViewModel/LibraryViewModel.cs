@@ -186,7 +186,7 @@ namespace EpicGamesLauncher.ViewModel
 
         public string UserButtonText => CurrentUser != null
                  ? $"{CurrentUser.Username} — ${CurrentUser.Balance:F2}"
-                 : "Offline";
+                 : "Оффлайн";
 
         public async Task RefreshData()
         {

@@ -42,7 +42,7 @@
                                     Name="TextBlock"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
-                                    Text="Search"
+                                    Text="Поиск"
                                     FontSize="15"
                                     Foreground="{StaticResource InactiveFontBrush}"/>
 

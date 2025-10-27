@@ -8,7 +8,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="829" d:DesignWidth="1538"
       Margin="5"
-      Title="Settings"
+      Title="Настройки"
       FontSize="16"
       Foreground="#EBEBEB"
       FontFamily="Brutal Type">
@@ -460,7 +460,7 @@
                 Margin="38,97,38,0">
 
                 <TextBlock
-                    Text="LANGUAGE"/>
+                    Text="Язык"/>
 
                 <ComboBox
                     SelectedIndex="0"
@@ -469,7 +469,7 @@
                     Margin="0,22"
                     Width="500" 
                     Style="{DynamicResource ComboBoxStyle1}">
-                    <ComboBoxItem Content="Default"/>
+                    <ComboBoxItem Content="Стандарт"/>
                     <ComboBoxItem Content="English (United States)"/>
                     <ComboBoxItem Content="français"/>
                     <ComboBoxItem Content="Deutsch"/>
@@ -498,13 +498,13 @@
                 VerticalAlignment="Top"
                 Margin="30,20,38,0">
                 <CheckBox
-                    Content="Run When My Computer Starts"
+                    Content="Запускать вместе с компьютером"
                     IsChecked="True"/>
                 <CheckBox
-                    Content="Enable Debug Logging"
+                    Content="Включить отладку"
                     Margin="0,18,0,0"/>
                 <CheckBox
-                    Content="Use Proxy"
+                    Content="Прокси"
                     Margin="0,18,0,0"/>
             </StackPanel>
 
@@ -531,14 +531,14 @@
                 </StackPanel.Resources>
 
                 <TextBlock>
-                    <Hyperlink>Troubleshoot</Hyperlink>
+                    <Hyperlink>Устранение неполадок</Hyperlink>
                 </TextBlock>
 
                 <TextBlock
                     Margin="0,25,0,0">
                     <Hyperlink
                         RequestNavigate="Hyperlink_OnRequestNavigate"
-                        NavigateUri="https://launcherhelp.epicgames.com/?lang=en">Support</Hyperlink>
+                        NavigateUri="https://launcherhelp.epicgames.com/?lang=en">Поддержка</Hyperlink>
                 </TextBlock>
 
                 <TextBlock
@@ -546,16 +546,16 @@
                     <Hyperlink
                         RequestNavigate="Hyperlink_OnRequestNavigate"
                         NavigateUri="">
-                    <Run Text="Show Logs"/>
+                    <Run Text="Показать журнал логов"/>
                     </Hyperlink>
                 </TextBlock>
 
-                <TextBlock
+                <!--<TextBlock
                     Margin="0,25,0,0">
                     <Hyperlink 
                         RequestNavigate="Hyperlink_OnRequestNavigate"
                         NavigateUri="https://trello.com/b/GXLc34hk/epic-games-store-roadmap">Epic Games Store Roadmap</Hyperlink>
-                </TextBlock>
+                </TextBlock>-->
 
                 <Separator
                     Margin="0,34"
@@ -569,7 +569,7 @@
                         <Hyperlink 
                             FontWeight="Normal"
                             RequestNavigate="Hyperlink_OnRequestNavigate"
-                            NavigateUri="https://epicgames.com/about?lang=en">About Epic Games</Hyperlink>
+                            NavigateUri="https://epicgames.com/about?lang=en">о Epic Games</Hyperlink>
                     </TextBlock>
                     <Rectangle
                         Width="1.5"
@@ -580,7 +580,7 @@
                         <Hyperlink
                             FontWeight="Normal"
                             RequestNavigate="Hyperlink_OnRequestNavigate"
-                            NavigateUri="https://epicgames.com/privacypolicy?lang=en">Privacy Policy</Hyperlink>
+                            NavigateUri="https://epicgames.com/privacypolicy?lang=en">Политика конфиденциальности</Hyperlink>
                     </TextBlock>
                     <Rectangle Width="1.5"
                                Fill="{StaticResource BackIconBrush}"
@@ -588,7 +588,7 @@
                     <TextBlock>
                         <Hyperlink FontWeight="Normal"
                                    RequestNavigate="Hyperlink_OnRequestNavigate"
-                                   NavigateUri="https://epicgames.com/tos?lang=en">Terms of Service</Hyperlink>
+                                   NavigateUri="https://epicgames.com/tos?lang=en">Условия</Hyperlink>
                     </TextBlock>
                 </StackPanel>
             </StackPanel>

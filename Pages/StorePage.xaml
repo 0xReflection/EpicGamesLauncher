@@ -94,15 +94,15 @@
                     <attachedProperties:SideNavigationMenu.MenuButtonsContainer>
                         <StackPanel Orientation="Vertical">
                             <attachedProperties:CheckableMenuButton
-                            Content="Home"
+                            Content="Главная страница"
                             Icon="{StaticResource HomeIcon}"
     Style="{StaticResource SideNavigationCheckableMenuButtonsStyle}"/>
                             <attachedProperties:CheckableMenuButton
-                            Content="Store"
+                            Content="Магазин"
                             Icon="{StaticResource StoreIcon}"
                             Style="{StaticResource SideNavigationCheckableMenuButtonsStyle}"/>
                             <attachedProperties:CheckableMenuButton
-                            Content="Library"
+                            Content="Библиотека"
                              Click="BtnLibrary_OnClick"
                             Icon="{StaticResource LibraryIcon}"
                             Style="{StaticResource SideNavigationCheckableMenuButtonsStyle}"/>
@@ -117,7 +117,7 @@
                         <StackPanel Orientation="Vertical">
                        
                             <attachedProperties:BasicMenuButton
-    Content="Settings"
+    Content="Настройки"
     x:Name="BtnSettings"
     Icon="{StaticResource SettingsIcon}"
     Style="{StaticResource SideNavigationBasicMenuButtonsStyle}"
@@ -153,7 +153,7 @@
 
                     <TextBlock
                         FontSize="17"
-                        Text="Sort by:"
+                        Text="Сортировать по:"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Margin="8,0"/>
@@ -164,8 +164,8 @@
                         VerticalAlignment="Center"
                         SelectedIndex="0"
                         Style="{StaticResource FlatComboBoxStyle1}">
-                        <ComboBoxItem Content="Recent" />
-                        <ComboBoxItem Content="Alphabetical"/>
+                        <ComboBoxItem Content="Недавние" />
+                        <ComboBoxItem Content="Алфавиту"/>
                     </ComboBox>
 
                     <StackPanel
@@ -173,7 +173,7 @@
                         Orientation="Horizontal">
                         <TextBlock
                             FontSize="17"
-                            Text="Filter:"
+                            Text="Фильтр:"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"/>
                         <ComboBox

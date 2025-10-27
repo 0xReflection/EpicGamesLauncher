@@ -125,7 +125,7 @@ namespace EpicGamesLauncher.ViewModel
 
         public string UserButtonText => CurrentUser != null
                  ? $"{CurrentUser.Username} — ${CurrentUser.Balance:F2}"
-                 : "Offline";
+                 : "Оффлайн";
         public AsyncCommand SearchGamesCommand { get; }
         public AsyncCommand SearchGamesCommandSB { get; }
         public ViewModelCommand ClearSearchCommand { get; }
@@ -168,7 +168,7 @@ namespace EpicGamesLauncher.ViewModel
             }
             catch (Exception ex)
             {
-                ErrorOccurred?.Invoke("Failed to load games");
+                ErrorOccurred?.Invoke("Ошибка загрузки информации об играх");
             }
             finally
             {
@@ -190,7 +190,7 @@ namespace EpicGamesLauncher.ViewModel
             }
             catch (Exception ex)
             {
-                ErrorOccurred?.Invoke("Failed to load genres");
+                ErrorOccurred?.Invoke("Ошибка загрузки жанров");
             }
         }
 
@@ -208,7 +208,7 @@ namespace EpicGamesLauncher.ViewModel
             }
             catch (Exception ex)
             {
-                ErrorOccurred?.Invoke("Failed to load platforms");
+                ErrorOccurred?.Invoke("Ошибка загрузки платформ");
             }
         }
 
@@ -227,7 +227,7 @@ namespace EpicGamesLauncher.ViewModel
             }
             catch (Exception ex)
             {
-                ErrorOccurred?.Invoke("Failed to search games");
+                ErrorOccurred?.Invoke("Ошибка поиска");
             }
             finally
             {
@@ -341,19 +341,19 @@ namespace EpicGamesLauncher.ViewModel
                 {
                     if (await _libraryService.HasGameAsync(CurrentUser.UserId, gameId))
                     {
-                        PurchaseFailed?.Invoke("You already own this game");
+                        PurchaseFailed?.Invoke("Вы уже купили игру");
                         return false;
                     }
 
                     await _libraryService.AddFreeGameToLibraryAsync(CurrentUser.UserId, gameId);
-                    PurchaseSuccess?.Invoke($"Successfully added {game.Title} to library");
+                    PurchaseSuccess?.Invoke($"Игра {game.Title} успешно добавлена в библиотеку");
                     return true;
                 }
                 return false;
             }
             catch (Exception ex)
             {
-                ErrorOccurred?.Invoke("Failed to add game to library");
+                ErrorOccurred?.Invoke("Ошибка приобретения ");
                 return false;
             }
         }
@@ -367,7 +367,7 @@ namespace EpicGamesLauncher.ViewModel
                 IsLoading = true;
                 if (await _libraryService.HasGameAsync(CurrentUser.UserId, SelectedGame.GameId))
                 {
-                    PurchaseFailed?.Invoke("You already own this game");
+                    PurchaseFailed?.Invoke("У вас уже есть эта игра. Ошибка добавления");
                     return;
                 }
 
@@ -381,7 +381,7 @@ namespace EpicGamesLauncher.ViewModel
                     OnPropertyChanged(nameof(UserBalance));
                     OnPropertyChanged(nameof(UserButtonText)); 
 
-                    PurchaseSuccess?.Invoke($"Successfully purchased {SelectedGame.Title}");
+                    PurchaseSuccess?.Invoke($"{SelectedGame.Title} Успешно добавлена");
                 }
                 else
                 {

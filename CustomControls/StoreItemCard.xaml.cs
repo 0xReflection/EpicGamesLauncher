@@ -111,11 +111,11 @@ namespace EpicGamesLauncher.CustomControls
         {
             if (IsFree)
             {
-                ActionButton.Content = "Add to library";
+                ActionButton.Content = "Приобретено";
             }
             else
             {
-                ActionButton.Content = $"Buy - {Price}";
+                ActionButton.Content = $"Купить - {Price}";
             }
         }
 

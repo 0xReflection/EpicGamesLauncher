@@ -48,7 +48,7 @@
 
                                     <TextBlock
                                         Margin="0,12"
-                                        Text="Shop Games &amp; Mods"
+                                        Text="Приорести игры &amp; Моды"
                                         TextWrapping="Wrap"
                                         HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                         VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
