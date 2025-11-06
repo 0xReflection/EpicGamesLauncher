@@ -13,6 +13,11 @@ namespace EpicGamesLauncher.ViewModel
         private readonly Action<object> _executeAction;
         private readonly Predicate<object> _canExecuteAction;
 
+        /// <summary>
+        /// /////
+        /// </summary>
+        /// <param name="executeAction"></param>
+
         public ViewModelCommand(Action<object> executeAction)
         {
             _executeAction = executeAction;
